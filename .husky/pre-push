@@ -1,0 +1,22 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+# Check if --no-verify flag is used
+# You can skip tests by running: git push --no-verify
+
+echo "🧪 Running tests before push..."
+echo "💡 To skip tests, use: git push --no-verify"
+echo ""
+
+npm test
+
+# If tests fail, prevent push
+if [ $? -ne 0 ]; then
+  echo ""
+  echo "❌ Tests failed! Push aborted."
+  echo "💡 Fix the tests or use 'git push --no-verify' to skip"
+  exit 1
+fi
+
+echo ""
+echo "✅ All tests passed! Proceeding with push..."
