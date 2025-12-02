@@ -26,6 +26,7 @@ const fs = require("fs");
 const path = require("path");
 const mongoose = require("mongoose");
 const XLSX = require("xlsx");
+const logger = require('../utils/logger');
 
 // Load ROOT-level .env
 require("dotenv").config({

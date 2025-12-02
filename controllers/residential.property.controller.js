@@ -5,39 +5,27 @@ const AppError = require('../utils/appError');
 exports.addNewResidentialRentProperty = catchAsync(async (req, res, next) => {
   const propertyDetails = req.body;
   const savedCustomer = await PropertyService.addNewResidentialRentProperty(propertyDetails);
-  res.status(201).json({
-    status: 'success',
-    data: savedProperty
-  });
+  res.status(201).json(savedCustomer);
 });
 
 
 exports.getResidentialPropertyListings = catchAsync(async (req, res, next) => {
   const agentDetailsParam = req.body;
   const properties = await PropertyService.getResidentialPropertyListings(agentDetailsParam);
-  res.status(200).json({
-    status: 'success',
-    data: properties
-  });
+  res.status(201).json(properties);
 });
 
 exports.deleteResidentialProperty = catchAsync(async (req, res, next) => {
   const reqDataParam = req.body;
  
   await PropertyService.deleteResidentialProperty(reqDataParam);
-  res.status(200).json({
-    status: 'success',
-    message: 'Property deleted successfully.'
-  });
+  res.status(201).json('Property deleted successfully.');
 });
 exports.closeResidentialProperty = catchAsync(async (req, res, next) => {
   const reqDataParam = req.body;
   
   const updatedProperty = await PropertyService.closeResidentialProperty(reqDataParam);
-  res.status(200).json({
-    status: 'success',
-    data: updatedProperty
-  });
+  res.status(201).json(updatedProperty);
 });
 
 

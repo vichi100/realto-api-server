@@ -10,7 +10,7 @@ const ResidentialRentCustomerMatch = require('../../models/match/residentialRent
 const ResidentialBuyCustomerMatch = require('../../models/match/residentialBuyCustomerMatch');
 
 const User = require("../../models/user");
-
+const logger = require('../../utils/logger');
 
 
 const getPropertyDetailsByIdToShare = async (propObj) => {

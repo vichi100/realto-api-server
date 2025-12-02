@@ -31,6 +31,7 @@ const ResidentialPropertyCustomerBuy = require("../models/residentialPropertyCus
 const CommercialPropertyCustomerRent = require("../models/commercialPropertyCustomerRent");
 const CommercialPropertyCustomerBuy = require("../models/commercialPropertyCustomerBuy");
 
+const logger = require('../utils/logger');
 
 
 const getGlobalSearchResult = async (searchObjParam) => {

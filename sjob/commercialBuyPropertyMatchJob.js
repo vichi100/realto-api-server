@@ -14,6 +14,8 @@ const commercialPropertyCustomerBuy = require("../models/commercialPropertyCusto
 // SCORING ENGINE
 const engine = require("./matchEngine");
 
+const logger = require('../utils/logger');
+
 // CONNECT
 // mongoose.connect("mongodb://realto:realto123@207.180.239.115:27017/realtodb");
 

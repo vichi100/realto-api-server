@@ -10,6 +10,7 @@ const sharp = require('sharp');
 const { IMAGE_PATH_URL} = require('./../../config/env');
 const { getDirectoryPath, getFileName, uniqueId } = require("../utility.service");
 
+const logger = require('../../utils/logger');
 
 
 const addNewCommercialProperty = async (propertyFinalDetails) => {

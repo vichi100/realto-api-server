@@ -1,6 +1,6 @@
 const { customAlphabet } = require('nanoid');
 const User = require("../models/user");
-
+const logger = require('../utils/logger');
 
 const uniqueId = () => {
   const nanoid1 = customAlphabet('1234567890', 5); // Generates a 5-digit random number

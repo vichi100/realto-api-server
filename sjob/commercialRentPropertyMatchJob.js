@@ -13,6 +13,7 @@ const commercialPropertyCustomerRent = require("../models/commercialPropertyCust
 
 // SCORING ENGINE
 const engine = require("./matchEngine");
+const logger = require('../../utils/logger');
 
 // CONNECT DB
 // mongoose.connect("mongodb://realto:realto123@207.180.239.115:27017/realtodb");

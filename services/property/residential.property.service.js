@@ -10,6 +10,9 @@ const sharp = require('sharp');
 const { IMAGE_PATH_URL} = require('./../../config/env');
 const { getDirectoryPath, getFileName, uniqueId } = require("../utility.service");
 
+const logger = require('../../utils/logger');
+
+
 const addNewResidentialRentProperty = async (propertyFinalDetails) => {
     const payload = propertyFinalDetails && propertyFinalDetails.body ? propertyFinalDetails.body : propertyFinalDetails;
     const obj = JSON.parse(JSON.stringify(payload));

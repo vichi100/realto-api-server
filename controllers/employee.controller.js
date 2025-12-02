@@ -5,91 +5,61 @@ const AppError = require('../utils/appError');
 exports.addEmployee = catchAsync(async (req, res, next) => {
   const employeeDetails = req.body;
   const savedEmployeeDetails = await EmployeeService.addEmployee(employeeDetails);
-  res.status(201).json({
-    status: 'success',
-    data: savedEmployeeDetails
-  });
+  res.status(201).json(savedEmployeeDetails);
 });
 
 exports.updateEmployeeDetails = catchAsync(async (req, res, next) => {
   const employeeDetails = req.body;
   const updatedEmployeeDetails = await EmployeeService.updateEmployeeDetails(employeeDetails);
-  res.status(200).json({
-    status: 'success',
-    data: updatedEmployeeDetails
-  });
+  res.status(201).json(updatedEmployeeDetails);
 });
 
 exports.deleteEmployee = catchAsync(async (req, res, next) => {
-  const { employeeId, agentId } = req.params;
-  await EmployeeService.deleteEmployee(employeeId, agentId);
-  res.status(204).json({
-    status: 'success',
-    data: null
-  });
+  const employeeDetailsParam = req.params;
+  await EmployeeService.deleteEmployee(employeeDetailsParam);
+  res.status(201).json('Employee deleted successfully.');
 });
 
 exports.removeEmployee = catchAsync(async (req, res, next) => {
-  const { employeeId, agentId } = req.params;
-  await EmployeeService.removeEmployee(employeeId, agentId);
-  res.status(204).json({
-    status: 'success',
-    data: null
-  });
+  const employeeDetailsParam = req.params;
+  await EmployeeService.removeEmployee(employeeDetailsParam);
+  res.status(201).json('Employee removed successfully.');
 });
 
 exports.updateEmployeeEditRights = catchAsync(async (req, res, next) => {
-  const { employeeId, editRights } = req.body;
-  const updatedEmployee = await EmployeeService.updateEmployeeEditRights(employeeId, editRights);
-  res.status(200).json({
-    status: 'success',
-    data: updatedEmployee
-  });
+  const employeeDetailsParam = req.body;
+  const updatedEmployee = await EmployeeService.updateEmployeeEditRights(employeeDetailsParam);
+  res.status(201).json(updatedEmployee);
 });
 
 exports.getEmployeeList = catchAsync(async (req, res, next) => {
-  const { agentId } = req.params;
-  const employeeList = await EmployeeService.getEmployeeList(agentId);
-  res.status(200).json({
-    status: 'success',
-    data: employeeList
-  });
+  const userObjParam = req.body;
+  const employeeList = await EmployeeService.getEmployeeList(userObjParam);
+  res.status(201).json(employeeList);
 });
 
 exports.updatePropertiesForEmployee = catchAsync(async (req, res, next) => {
-  const { employeeId, properties } = req.body;
-  const updatedEmployee = await EmployeeService.updatePropertiesForEmployee(employeeId, properties);
-  res.status(200).json({
-    status: 'success',
-    data: updatedEmployee
-  });
+  const employeeDetailsParam = req.body;
+  const updatedEmployee = await EmployeeService.updatePropertiesForEmployee(employeeDetailsParam);
+  res.status(201).json(updatedEmployee);
 });
 
 exports.insertNewUserAsEmployee = catchAsync(async (req, res, next) => {
-  const { agentId, userDetails } = req.body;
-  const newEmployee = await EmployeeService.insertNewUserAsEmployee(agentId, userDetails);
-  res.status(201).json({
-    status: 'success',
-    data: newEmployee
-  });
+  const employeeDetailsParam = req.body;
+  const newEmployee = await EmployeeService.insertNewUserAsEmployee(employeeDetailsParam);
+  res.status(201).json(newEmployee);
 });
 
 exports.getEmployerDetails = catchAsync(async (req, res, next) => {
-  const { employeeId } = req.params;
-  const employerDetails = await EmployeeService.getEmployerDetails(employeeId);
-  res.status(200).json({
-    status: 'success',
-    data: employerDetails
-  });
+  const userObjParam = req.params;
+  const employerDetails = await EmployeeService.getEmployerDetails(userObjParam);
+  res.status(201).json(employerDetails);
 });
 
 exports.updateUserEmployeeList = catchAsync(async (req, res, next) => {
-  const { agentId, employeeId, action } = req.body;
-  const updatedUser = await EmployeeService.updateUserEmployeeList(agentId, employeeId, action);
-  res.status(200).json({
-    status: 'success',
-    data: updatedUser
-  });
+  const { agentId, employeeId } = req.body;
+  const updatedUser = await EmployeeService.updateUserEmployeeList(agentId, employeeId);
+  res.status(201).json(updatedUser);
 });
 
 

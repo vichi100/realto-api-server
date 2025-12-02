@@ -12,6 +12,8 @@ const ResidentialPropertyCustomerBuy = require("../models/residentialPropertyCus
 const CommercialPropertyCustomerRent = require("../models/commercialPropertyCustomerRent");
 const CommercialPropertyCustomerBuy = require("../models/commercialPropertyCustomerBuy");
 
+const logger = require('../utils/logger');
+const { uniqueId } = require('./utility.service');
 
 const checkLoginRole = async (userDetailsParam) => {
   const mobileNumber = JSON.parse(JSON.stringify(userDetailsParam)).user_mobile;

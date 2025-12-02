@@ -11,6 +11,8 @@ const ResidentialPropertyCustomerBuy = require("../models/residentialPropertyCus
 const CommercialPropertyCustomerRent = require("../models/commercialPropertyCustomerRent");
 const CommercialPropertyCustomerBuy = require("../models/commercialPropertyCustomerBuy");
 
+const logger = require('../utils/logger');
+
 
 const addEmployee = async (employeeDetailsParam) => {
   const employeeDetails = JSON.parse(JSON.stringify(employeeDetailsParam));
@@ -249,6 +251,7 @@ const updateEmployeeEditRights = async (editRightEmpObjParam) => {
     return err;
   }
 };
+
 const getEmployeeList = async (userObjParam) => {
   const userObj = JSON.parse(JSON.stringify(userObjParam));
   logger.info(JSON.stringify(userObjParam));
@@ -312,7 +315,10 @@ const getEmployerDetails = agentIdsArray => {
     }
   });
 };
+
+
 const updateUserEmployeeList = (agentId, employeeId) => {
+  
   User.updateOne(
     { id: agentId },
     { $addToSet: { employees: employeeId } },
@@ -330,6 +336,8 @@ const updateUserEmployeeList = (agentId, employeeId) => {
     }
   );
 };
+
+
 const updatePropertiesForEmployee = async (userObjParam) => {
   const userObj = JSON.parse(JSON.stringify(userObjParam));
   logger.info(JSON.stringify(userObjParam));

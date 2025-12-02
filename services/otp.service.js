@@ -1,6 +1,7 @@
 
 const axios = require("axios");
 const { OTP_API } = require('../config/env');
+const logger = require('../utils/logger');
 
 
 const generateOTP = async (otpDetails) => {

@@ -21,6 +21,8 @@ const ResidentialPropertyCustomerBuy = require("../../models/residentialProperty
 const CommercialPropertyCustomerRent = require("../../models/commercialPropertyCustomerRent");
 const CommercialPropertyCustomerBuy = require("../../models/commercialPropertyCustomerBuy");
 
+const logger = require('../../utils/logger');
+
 
 const getCustomerDetailsByIdToShare = (queryObjParam) => {
   const propObj = JSON.parse(JSON.stringify(queryObjParam));

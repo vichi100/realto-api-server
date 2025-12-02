@@ -11,6 +11,7 @@ const residentialRentCustomerMatch = require("../models/match/residentialRentCus
 const ResidentialPropertyCustomerRent = require("../models/residentialPropertyCustomerRent");
 
 const engine = require("./matchEngine");
+const logger = require('../utils/logger');
 
 // Connect to MongoDB
 // mongoose.connect("mongodb://realto:realto123@207.180.239.115:27017/realtodb");

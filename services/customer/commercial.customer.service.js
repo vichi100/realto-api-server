@@ -8,6 +8,7 @@ const User = require("../../models/user");
 const CommercialPropertyCustomerRent = require("../../models/commercialPropertyCustomerRent");
 const CommercialPropertyCustomerBuy = require("../../models/commercialPropertyCustomerBuy");
 
+const logger = require('../../utils/logger');
 
 
 const addNewCommercialCustomer = async (customerDetailsParam) => {

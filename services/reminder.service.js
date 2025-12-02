@@ -26,10 +26,6 @@ const ResidentialRentCustomerMatch = require('../models/match/residentialRentCus
 const ResidentialBuyPropertyMatch = require('../models/match/residentialBuyPropertyMatch');
 const ResidentialBuyCustomerMatch = require('../models/match/residentialBuyCustomerMatch');
 
-
-
-
-
 const Reminder = require("../models/reminder");
 // const Agent = require("../models/agent");
 // const Employee = require("../models/employee");
@@ -41,7 +37,7 @@ const CommercialPropertyCustomerRent = require("../models/commercialPropertyCust
 const CommercialPropertyCustomerBuy = require("../models/commercialPropertyCustomerBuy");
 const Message = require("../models/message");
 
-
+const logger = require('../utils/logger');
 
 
 

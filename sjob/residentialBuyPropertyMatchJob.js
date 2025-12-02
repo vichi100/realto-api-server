@@ -14,6 +14,7 @@ const ResidentialPropertyCustomerBuy = require("../models/residentialPropertyCus
 
 // SCORING ENGINE
 const engine = require("./matchEngine");
+const logger = require('../utils/logger');
 
 // DB CONNECTION
 // mongoose.connect("mongodb://realto:realto123@207.180.239.115:27017/realtodb");
