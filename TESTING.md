@@ -80,3 +80,100 @@ Current coverage: **91.58%** overall
 3. ✅ Maintain coverage above 90%
 4. ✅ Fix failing tests immediately
 5. ⚠️ Only use `--no-verify` for urgent hotfixes
+
+
+
+
+
+
+I'll help you set up a pre-push Git hook that runs all tests before pushing code, with a flag to skip if needed. Let me create this for you: 
+
+Created [](file:///Users/vichi/Documents/workspace/realto-api-server/.husky/pre-push)
+
+Ran terminal command: npm install --save-dev husky
+
+Ran terminal command: npx husky init
+
+Ran terminal command: chmod +x .husky/pre-push
+
+Read [](file:///Users/vichi/Documents/workspace/realto-api-server/package.json)
+
+Perfect! Now let me add a convenient npm script to also allow manual test running with coverage: 
+
+Using "Replace String in File"
+
+
+```
+
+```
+Now let me create a README section documenting how to use this: 
+
+Created [](file:///Users/vichi/Documents/workspace/realto-api-server/TESTING.md)
+
+Perfect! Let me verify the setup by checking if everything is in place: 
+
+Read [](file:///Users/vichi/Documents/workspace/realto-api-server/.husky)
+
+Excellent! Everything is set up. Here's what I've configured for you:
+
+## ✅ Setup Complete!
+
+### 🎯 What's Been Configured:
+
+1. **Husky Git Hooks** installed and initialized
+2. **Pre-Push Hook** created that runs all tests before pushing
+3. **Additional npm scripts** for convenience:
+   - `npm run test:coverage` - Run tests with coverage report
+   - `npm run test:watch` - Run tests in watch mode for development
+
+### 📋 How to Use:
+
+#### **Normal Push (Tests Run Automatically)**
+```bash
+git add .
+git commit -m "Your commit message"
+git push origin main
+```
+→ Tests run automatically
+→ Push succeeds only if all tests pass ✅
+
+#### **Skip Tests (When Needed)**
+```bash
+git push --no-verify origin main
+```
+→ Bypasses test execution
+→ Use only for emergencies/WIP ⚠️
+
+### 📊 Quick Commands:
+
+```bash
+# Run all tests
+npm test
+
+# Run tests with coverage
+npm run test:coverage
+
+# Run tests in watch mode
+npm run test:watch
+
+# Run specific test file
+npm test -- user.service.test.js
+```
+
+### 📖 Documentation:
+
+I've created a TESTING.md file with:
+- Complete testing guide
+- Coverage statistics (91.58% overall!)
+- Best practices
+- All available commands
+
+The pre-push hook will show you helpful messages like:
+- 🧪 Running tests before push...
+- 💡 To skip tests, use: git push --no-verify
+- ✅ All tests passed! Proceeding with push...
+- ❌ Tests failed! Push aborted.
+
+You're all set! Your code quality is now protected automatically. 🚀
+
+Made changes.
