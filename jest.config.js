@@ -7,5 +7,9 @@ module.exports = {
     'services/**/*.js',
     '!services/**/__tests__/**'
   ],
-  verbose: true
+  verbose: true,
+  // Suppress console outputs during tests for cleaner output
+  silent: false, // Set to true to suppress all console outputs
+  // Or selectively suppress specific console methods:
+  // setupFilesAfterEnv will handle console mocking
 };
