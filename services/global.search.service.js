@@ -32,6 +32,10 @@ const CommercialPropertyCustomerRent = require("../models/commercialPropertyCust
 const CommercialPropertyCustomerBuy = require("../models/commercialPropertyCustomerBuy");
 
 const logger = require('../utils/logger');
+const { 
+  replaceOwnerDetailsWithAgentDetails, 
+  replaceCustomerDetailsWithAgentDetails 
+} = require('./utility.service');
 
 
 const getGlobalSearchResult = async (searchObjParam) => {

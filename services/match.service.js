@@ -24,6 +24,10 @@ const CommercialPropertyCustomerRent = require("../models/commercialPropertyCust
 const CommercialPropertyCustomerBuy = require("../models/commercialPropertyCustomerBuy");
 
 const logger = require('../utils/logger');
+const { 
+  replaceOwnerDetailsWithAgentDetails, 
+  replaceCustomerDetailsWithAgentDetails 
+} = require('./utility.service');
 
 /*
 get matched property using property_id from residentialRentPropertyMatch
