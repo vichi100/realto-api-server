@@ -1,6 +1,10 @@
 const express = require('express');
 const app = express();
+const bodyParser = require("body-parser");
+const fileUpload = require('express-fileupload');
+
 const logger = require('./utils/logger');
+const { IMAGE_PATH_URL} = require('./config/env');
 
 // Controllers
 const commercialCustomerController = require('./controllers/commercial.customer.controller');
@@ -19,6 +23,10 @@ const otpController = require('./controllers/otp.controller');
 
 // Basic middleware
 app.use(express.json());
+app.use(fileUpload());
+app.use(bodyParser.json());
+
+app.use(express.static(IMAGE_PATH_URL));
 
 // Basic routes that should stay in app.js
 app.get('/', (req, res) => res.send('Hello'));

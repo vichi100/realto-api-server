@@ -57,51 +57,41 @@ module.exports = function encryptFieldsPlugin(schema, options) {
   //
   // 🔐 ENCRYPT ON SAVE
   //
-  schema.pre('save', function (next) {
-    try {
-      for (const path of paths) {
-        encryptFieldOnDoc(this, path);
-      }
-      next();
-    } catch (err) {
-      next(err);
+  schema.pre('save', async function () {
+    for (const path of paths) {
+      encryptFieldOnDoc(this, path);
     }
   });
 
   //
   // 🔐 ENCRYPT ON UPDATEs (updateOne, updateMany, findOneAndUpdate, update)
   //
-  async function encryptUpdate(next) {
-    try {
-      const update = this.getUpdate && this.getUpdate();
-      if (!update) return next();
+  async function encryptUpdate() {
+    const update = this.getUpdate && this.getUpdate();
+    if (!update) return;
 
-      const fineTargets = ['$set', '$setOnInsert'];
+    const fineTargets = ['$set', '$setOnInsert'];
 
-      for (const path of paths) {
-        // Handle $set / $setOnInsert
-        for (const op of fineTargets) {
-          if (update[op] && Object.prototype.hasOwnProperty.call(update[op], path)) {
-            const raw = update[op][path];
-            if (raw !== undefined && raw !== null && !isEncryptedObject(raw)) {
-              update[op][path] = encryptValue(raw);
-            }
-          }
-        }
-        // Direct top-level path in update
-        if (Object.prototype.hasOwnProperty.call(update, path)) {
-          const raw = update[path];
+    for (const path of paths) {
+      // Handle $set / $setOnInsert
+      for (const op of fineTargets) {
+        if (update[op] && Object.prototype.hasOwnProperty.call(update[op], path)) {
+          const raw = update[op][path];
           if (raw !== undefined && raw !== null && !isEncryptedObject(raw)) {
-            update[path] = encryptValue(raw);
+            update[op][path] = encryptValue(raw);
           }
         }
       }
-
-      this.setUpdate(update);
-      next();
-    } catch (err) {
-      next(err);
+      // Direct top-level path in update
+      if (Object.prototype.hasOwnProperty.call(update, path)) {
+        const raw = update[path];
+        if (raw !== undefined && raw !== null && !isEncryptedObject(raw)) {
+          update[path] = encryptValue(raw);
+        }
+      }
     }
+
+    this.setUpdate(update);
   }
 
   schema.pre('findOneAndUpdate', encryptUpdate);

@@ -13,13 +13,17 @@ const { getDirectoryPath, getFileName, uniqueId } = require("../utility.service"
 const logger = require('../../utils/logger');
 
 
-const addNewResidentialRentProperty = async (propertyFinalDetails) => {
-    const payload = propertyFinalDetails && propertyFinalDetails.body ? propertyFinalDetails.body : propertyFinalDetails;
-    const obj = JSON.parse(JSON.stringify(payload));
-    logger.info("Test message");
-    logger.info("propertyFinalDetails: ", JSON.parse(obj.propertyFinalDetails))
-    console.info("propertyFinalDetails: ", JSON.parse(obj.propertyFinalDetails))
-    const propertyDetails = JSON.parse(obj.propertyFinalDetails)
+const addNewResidentialRentProperty = async (req) => {
+    const payload = req.body;
+    const uploadedFiles = req.files || {};
+    
+    logger.info("Service - Received payload keys:", Object.keys(payload));
+    logger.info("Service - Uploaded files:", uploadedFiles ? Object.keys(uploadedFiles) : 'NONE');
+    
+    // Parse propertyFinalDetails if it exists and is a string, otherwise use the payload directly
+    const propertyDetails = payload.propertyFinalDetails 
+        ? (typeof payload.propertyFinalDetails === 'string' ? JSON.parse(payload.propertyFinalDetails) : payload.propertyFinalDetails)
+        : payload;
 
     const dir = getDirectoryPath(propertyDetails.agent_id);
     const createDirPath = IMAGE_PATH_URL + dir;
@@ -31,23 +35,52 @@ const addNewResidentialRentProperty = async (propertyFinalDetails) => {
 
     // storing files - START
     propertyDetails.image_urls = [];
-    const files = propertyFinalDetails && propertyFinalDetails.files ? propertyFinalDetails.files : {};
+    const files = uploadedFiles;
+    
+    logger.info("Files object received:", files && Object.keys(files).length > 0 ? 'YES' : 'NO');
+    logger.info("Number of files:", Object.keys(files).length);
+    
     if (files && Object.keys(files).length > 0) {
-        Object.keys(files).forEach((item, index) => {
-            logger.info("item", item);
+        const fileKeys = Object.keys(files);
+        logger.info("File keys:", fileKeys);
+        
+        const imageProcessingPromises = fileKeys.map(async (item, index) => {
+            logger.info("Processing file:", item);
             const file = files[item];
+            
+            // Check if we have binary data
+            logger.info(`File [${item}] - Has data:`, file && file.data ? 'YES' : 'NO');
+            logger.info(`File [${item}] - Data type:`, file && file.data ? typeof file.data : 'undefined');
+            logger.info(`File [${item}] - Data size:`, file && file.data ? file.data.length : 0, 'bytes');
+            logger.info(`File [${item}] - File name:`, file && file.name ? file.name : 'unknown');
+            logger.info(`File [${item}] - Mime type:`, file && file.mimetype ? file.mimetype : 'unknown');
+            
+            if (!file || !file.data) {
+                logger.error(`File [${item}] - No binary data available, skipping`);
+                return;
+            }
+            
             const fileName = getFileName(propertyDetails.agent_id, index);
             const path = createDirPath + fileName;
-            propertyDetails.image_urls.push({ url: dir + fileName });
-            sharp(file.data)
-                .toFile(path, (err, info) => {
-                    if (err) {
-                        logger.info('sharp>>>', err);
-                    } else {
-                        logger.info('resize ok !');
-                    }
-                });
+            
+            try {
+                await sharp(file.data)
+                    .resize(800, 600, { fit: 'inside', withoutEnlargement: true })
+                    .jpeg({ quality: 80 })
+                    .toFile(path);
+                
+                logger.info(`Image saved successfully: ${path}`);
+                propertyDetails.image_urls.push({ url: dir + fileName });
+            } catch (err) {
+                logger.error(`Error saving image ${fileName}:`, err);
+            }
         });
+        
+        // Wait for all images to be processed
+        await Promise.all(imageProcessingPromises);
+        logger.info(`Total images saved: ${propertyDetails.image_urls.length}`);
+    } else {
+        logger.info("No files to process");
     }
     // storing files - END
     const locationArea = propertyDetails.property_address.location_area
