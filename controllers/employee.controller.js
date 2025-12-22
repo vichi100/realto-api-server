@@ -15,15 +15,15 @@ exports.updateEmployeeDetails = catchAsync(async (req, res, next) => {
 });
 
 exports.deleteEmployee = catchAsync(async (req, res, next) => {
-  const employeeDetailsParam = req.params;
-  await EmployeeService.deleteEmployee(employeeDetailsParam);
-  res.status(201).json('Employee deleted successfully.');
+  const employeeDetailsParam = req.body;
+  const result = await EmployeeService.deleteEmployee(employeeDetailsParam);
+  res.status(201).json(result);
 });
 
 exports.removeEmployee = catchAsync(async (req, res, next) => {
-  const employeeDetailsParam = req.params;
-  await EmployeeService.removeEmployee(employeeDetailsParam);
-  res.status(201).json('Employee removed successfully.');
+  const employeeDetailsParam = req.body;
+  const result =  EmployeeService.removeEmployee(employeeDetailsParam);
+  res.status(201).json(result);
 });
 
 exports.updateEmployeeEditRights = catchAsync(async (req, res, next) => {

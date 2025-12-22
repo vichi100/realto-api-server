@@ -12,6 +12,8 @@ const CommercialPropertyCustomerRent = require("../models/commercialPropertyCust
 const CommercialPropertyCustomerBuy = require("../models/commercialPropertyCustomerBuy");
 
 const logger = require('../utils/logger');
+const { uniqueId } = require('./utility.service');
+const mongoose = require('mongoose');
 
 
 const addEmployee = async (employeeDetailsParam) => {
