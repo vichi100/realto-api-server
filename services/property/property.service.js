@@ -12,6 +12,47 @@ const ResidentialBuyCustomerMatch = require('../../models/match/residentialBuyCu
 const User = require("../../models/user");
 const logger = require('../../utils/logger');
 
+async function findResidentialById(property_id, agent_id) {
+    const [rent, sell] = await Promise.all([
+        ResidentialPropertyRent.findOne({ property_id, agent_id }).lean().exec(),
+        ResidentialPropertySell.findOne({ property_id, agent_id }).lean().exec(),
+    ]);
+    return rent || sell || null;
+}
+
+async function findCommercialById(property_id, agent_id) {
+    const [rent, sell] = await Promise.all([
+        CommercialPropertyRent.findOne({ property_id, agent_id }).lean().exec(),
+        CommercialPropertySell.findOne({ property_id, agent_id }).lean().exec(),
+    ]);
+    return rent || sell || null;
+}
+
+const getPropertyByPublicPath = async ({ agent_id, property_id, property_type }) => {
+    const type = (property_type || '').toLowerCase();
+    let property = null;
+    if (type === 'residential') {
+        property = await findResidentialById(property_id, agent_id);
+    } else if (type === 'commercial') {
+        property = await findCommercialById(property_id, agent_id);
+    } else {
+        return null;
+    }
+
+    if (!property) return null;
+
+    // Replace owner details with agent details for sharing link
+    const agentDetails = await User.findOne({ id: agent_id }).lean().exec();
+    if (agentDetails) {
+        property.owner_details = {
+            name: agentDetails.name || 'Agent',
+            mobile1: agentDetails.mobile,
+            address: agentDetails.address,
+        };
+    }
+    return property;
+};
+
 
 const getPropertyDetailsByIdToShare = async (propObj) => {
     const body = JSON.parse(JSON.stringify(propObj));
@@ -189,4 +230,5 @@ const getPropertyListingForMeeting = async (propObj) => {
 module.exports = {
     getPropertyDetailsByIdToShare,
     getPropertyListingForMeeting,
+    getPropertyByPublicPath,
 };

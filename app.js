@@ -33,6 +33,12 @@ app.get('/', (req, res) => res.send('Hello'));
 app.get('/health', (req, res) => res.sendStatus(200));
 app.get('/error', (req, res) => { throw new Error('Test error'); });
 
+// Public property share link
+app.get('/prop/:agentId/:propertyId/:propertyType', function (req, res) {
+	logger.info('getPropertyByPublicPath');
+	propertyController.getPropertyByPublicPath(req, res);
+});
+
 // --- Wrappers (no mounted routers) ---
 
 // Residential property

@@ -14,3 +14,17 @@ exports.getPropertyListingForMeeting = catchAsync(async (req, res, next) => {
   res.status(201).json(properties);
 });
 
+// GET /prop/:agentId/:propertyId/:propertyType
+exports.getPropertyByPublicPath = catchAsync(async (req, res, next) => {
+  const { agentId, propertyId, propertyType } = req.params;
+  const result = await PropertyService.getPropertyByPublicPath({
+    agent_id: agentId,
+    property_id: propertyId,
+    property_type: propertyType,
+  });
+  if (!result) {
+    return res.status(404).json({ error: 'Property not found' });
+  }
+  res.status(200).json(result);
+});
+
